@@ -10,17 +10,18 @@ import (
 type GenericAuthenticatorQRRequest struct {
 	HTTPResponse *http.Response
 
-	Label   string `json:"label"`
-	Issuer  string `json:"issuer"`
-	QRCode  string `json:"qr_code"`
-	Success bool   `json:"success"`
+	ErrorCode    string `json:"error_code"`
+	ErrorMessage string `json:"message"`
+	Label        string `json:"label"`
+	Issuer       string `json:"issuer"`
+	QRCode       string `json:"qr_code"`
+	Success      bool   `json:"success"`
 }
 
 // NewGenericAuthenticatorQR creates an instance of a GenericAuthenticatorQRRequest
 func NewGenericAuthenticatorQR(response *http.Response) (*GenericAuthenticatorQRRequest, error) {
 	genericAuthenticatorQR := &GenericAuthenticatorQRRequest{HTTPResponse: response}
 	body, err := ioutil.ReadAll(response.Body)
-
 	if err != nil {
 		Logger.Println("Error reading from API:", err)
 		return genericAuthenticatorQR, err
